@@ -46,7 +46,7 @@ $config = [
         //配置URL规则
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'enableStrictParsing'=>true,      //是否启用严格解析，且仅当enablePrettyUrl 为true时，才使用属性，严格解析，传入*请求的URL至少与rules之一匹配，才能视为有效请求
+            'enableStrictParsing'=>false,      //是否启用严格解析，且仅当enablePrettyUrl 为true时，才使用属性，严格解析，传入*请求的URL至少与rules之一匹配，才能视为有效请求
             'showScriptName' => false,        //是否在构造的URL中显示条目脚本名称，默认为true，仅当enablePrettyUrl为true时使用
             'rules' => [
                 ['class'=>'yii\rest\UrlRule','controller'=>'user'],

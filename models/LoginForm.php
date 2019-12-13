@@ -19,6 +19,16 @@ class LoginForm extends Model
 
     private $_user = false;
 
+    CONST SCENARIO_LOGIN = 'login';
+    CONST SCENARIO_REGISTER = 'register';
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_LOGIN => ['username', 'password','!secret'],     //验证一个属性但不安全的，可以再scenarios（）方法中属性名加一个惊叹号 ！ ，例如像如下的secret
+            self::SCENARIO_REGISTER => ['username', 'email', 'password']
+        ];
+    }
 
     /**
      * @return array the validation rules.
@@ -60,7 +70,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         return false;
     }

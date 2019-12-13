@@ -12,12 +12,19 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
+//    'defaultRoute'=>'apps',                        //该属性指定未配置的请求的响应 路由 规则,当请求'/'时，默认跳转apps控制器
 //    'version' => '1.0',                         //该属性指定应用的版本，其他代码不使用的话可以不配置
 //    'language' => 'zh_cn',                      //该属性指定应用展示给终端用户的语言。
 //    'sourceLanguage' => 'en-US',                //该属性指定应用代码的语言
-//    'extensions' => require __DIR__ . '/../vendor/yiisoft/extensions.php',        //该属性用数组列表指定应用安装和使用的扩展，默认使用@verdor/yiisoft/extensions.php文件返回的数组。
 //    'charset' => 'UTF-8',                       //该属性指定应用使用的字符集，默认就是
 //    'timeZone' => 'America/Los_Angeles',        //该属性提供一种修改PHP运行环境中的默认时区，配置该属性 本质上就是调用PHP函数date_default_timezone_set()
+//    'extensions' => require __DIR__ . '/../vendor/yiisoft/extensions.php',    //该属性用数组列表指定应用安装和使用的扩展，默认使用@verdor/yiisoft/extenions.php文件返回的数组。
+
+//    'layout' => 'main',         //该属性指定渲染视图默认使用的布局名字，默认布局文件路径别名，@app/views/layouts/main.php
+//    'layoutPath'=> '@app/views/layouts/admin',      //该属性指定查找布局文件的路径，默认为 @app/views/layouts
+
+    'runtimePath'=>'@app/runtime',          //该属性指定临时文件如日志文件、缓存文件等保存路径， 默认值为带别名的 @app/runtime
+    'viewPath'=>'@app/views',
 
     'components' => [
         'request' => [
@@ -61,14 +68,26 @@ $config = [
             ],
         ]
     ],
-    'controllerMap'=>[                  //该属性允许你指定一个控制ID到任意控制器类。当然指向的视图不变，所以任意控制器的数据需要和视图的中的变量相同，否则会报数据错误
+
+    /*
+    //该属性允许你指定一个控制ID到任意控制器类。当然指向的视图不变，所以任意控制器的数据需要和视图的中的变量相同，否则会报数据错误
+    'controllerMap'=>[
         //注释原因：指向控制器的数据和视图渲染的数据变量不同，暂时不需要
-//        'apps'=>'app\controllers\CountryController'
-//        'country'=>[
-//            'class'=>'app\controllers\AppsController'
-//        ]
+        'apps'=>'app\controllers\CountryController'
+        'country'=>[
+            'class'=>'app\controllers\AppsController'
+        ]
     ],
-    'params' => $params,
+    'controllerNamespace'=>'app\controllers',           //该属性指定控制器类默认的命名空间，默认为app\controllers
+    */
+    'modules' => [
+        'booking' => 'app\modules\booking\BookingModule',     //在gii中设置模块类及模块ID自动生成模块
+        'comment' => [
+            'class' => 'app\modules\comment\CommentModule',
+            'db' => 'db',
+        ]
+    ],
+    'params' => $params,            //使用方法：Yii::$app->params[''];
 ];
 
 if (YII_ENV_DEV) {

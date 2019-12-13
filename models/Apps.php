@@ -60,7 +60,7 @@ class Apps extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'appid' => 'Appid',
+            'appid' => Yii::t('app','产品'),
             'appkey' => 'Appkey',
             'app_secret' => 'App Secret',
             'name' => 'Name',

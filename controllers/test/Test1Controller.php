@@ -22,4 +22,9 @@ class Test1Controller extends Controller
         $entryForm->name = '2222';
         echo $entryForm->name;
     }
+
+    public function actionComponent()
+    {
+        var_dump(@$this->viewPath);
+    }
 }

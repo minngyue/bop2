@@ -2,7 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
-
+$logFile = date('Ymd') . '.log';
 $config = [
     'id' => 'basic',                        //用来区分其他应用的唯一标识ID
     'name' => 'testYii',                    //该属性指定你可能想展示给终端用户的应用名称，不同于需要唯一性的id属性，该属性可以不唯一，该属性用户显示 应用给的用途。如果没有用到，可以不配置该属性。
@@ -12,7 +12,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
-//    'defaultRoute'=>'apps',                        //该属性指定未配置的请求的响应 路由 规则,当请求'/'时，默认跳转apps控制器
+    'defaultRoute' => 'apps',                        //该属性指定未配置的请求的响应 路由 规则,当请求'/'时，默认跳转apps控制器
 //    'version' => '1.0',                         //该属性指定应用的版本，其他代码不使用的话可以不配置
 //    'language' => 'zh_cn',                      //该属性指定应用展示给终端用户的语言。
 //    'sourceLanguage' => 'en-US',                //该属性指定应用代码的语言
@@ -23,8 +23,8 @@ $config = [
 //    'layout' => 'main',         //该属性指定渲染视图默认使用的布局名字，默认布局文件路径别名，@app/views/layouts/main.php
 //    'layoutPath'=> '@app/views/layouts/admin',      //该属性指定查找布局文件的路径，默认为 @app/views/layouts
 
-    'runtimePath'=>'@app/runtime',          //该属性指定临时文件如日志文件、缓存文件等保存路径， 默认值为带别名的 @app/runtime
-    'viewPath'=>'@app/views',
+    'runtimePath' => '@app/runtime',          //该属性指定临时文件如日志文件、缓存文件等保存路径， 默认值为带别名的 @app/runtime
+    'viewPath' => '@app/views',
 
     'components' => [
         'request' => [
@@ -49,12 +49,34 @@ $config = [
             'useFileTransport' => true,
         ],
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'traceLevel' => YII_DEBUG ? 3 : 0,          //消息跟踪级别，Yii_DEBUG开启，每个日志消息被记录的时候，将被追加最多3个调用堆栈层级，
+//            'flushInterval'=>1,         //为了让每个日志消息在日志目标中能够立即出现，应设置flushInterval和exportInterval都为1,注意频繁的消息刷新和导出将降低你的应用性能
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error','warning','info'],
+                    'categories'=>[
+                        'application'.$logFile,
+                        'pay'.$logFile,
+                        'console'.$logFile
+                    ],
+//                    'exportInterval'=>1,
                 ],
+                [
+                    'class'=>'yii\log\DbTarget',        //在数据库表里保存他们
+                    'levels'=>['error','warning']
+                ]
+                //邮件日志
+//                [
+//                    'class' => 'yii\log\EmailTarget',
+//                    'levels' => ['error', 'warning', 'info'],
+//                    'categories' => ['yii\db\*'],
+//                    'message' => [
+//                        'from' => ['log@example.com'],
+//                        'to' => ['admin@example.com', 'developer@example.com'],
+//                        'subject' => 'Database errors at example.com',
+//                    ]
+//                ]
             ],
         ],
         'db' => $db,
@@ -85,7 +107,8 @@ $config = [
         'comment' => [
             'class' => 'app\modules\comment\CommentModule',
             'db' => 'db',
-        ]
+        ],
+        'home'=>'app\modules\home\HomeModule',
     ],
     'params' => $params,            //使用方法：Yii::$app->params[''];
 ];

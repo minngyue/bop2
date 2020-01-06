@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\models\UModel;
 use Yii;
 
 /**
@@ -27,7 +28,7 @@ use Yii;
  * @property string $updated_at 更新时间
  * @property string $published_at 发布时间
  */
-class Apps extends \yii\db\ActiveRecord
+class Apps extends UModel
 {
     /**
      * {@inheritdoc}

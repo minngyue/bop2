@@ -8,6 +8,8 @@
 namespace app\controllers\test;
 use yii\web\Controller;
 use app\models\test\EntryForm;
+use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
 
 class Test1Controller extends Controller
 {
@@ -26,5 +28,10 @@ class Test1Controller extends Controller
     public function actionComponent()
     {
         var_dump(@$this->viewPath);
+    }
+
+    function actionStr()
+    {
+        var_dump(Inflector::camel2id(StringHelper::basename(get_called_class()), '_'));
     }
 }

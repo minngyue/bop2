@@ -1,4 +1,5 @@
 <?php
+use yii\db\Connection;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -106,9 +107,13 @@ $config = [
         'booking' => 'app\modules\booking\BookingModule',     //在gii中设置模块类及模块ID自动生成模块
         'comment' => [
             'class' => 'app\modules\comment\CommentModule',
-            'db' => 'db',
+            'db' =>  [
+                'tablePrefix' => 'main_',
+                'class' => Connection::className(),
+                'enableQueryCache' => false
+            ],
         ],
-        'home'=>'app\modules\home\HomeModule',
+        'homing'=>'app\modules\homing\HomingModule',
     ],
     'params' => $params,            //使用方法：Yii::$app->params[''];
 ];

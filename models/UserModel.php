@@ -22,4 +22,9 @@ class UserModel extends ActiveRecord
             self::SCENARIO_REGISTER =>['username','email','password']
         ];
     }
+
+    public static function tableName()
+    {
+        return '{{%users}}';
+    }
 }

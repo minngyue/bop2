@@ -5,9 +5,9 @@
  * Date: 2020/1/6
  * Time: 16:18
  */
-namespace app\modules\home;
+namespace app\modules\homing;
 
-class HomeModule extends \yii\base\Module
+class HomingModule extends \yii\base\Module
 {
     /**
      * @var string
@@ -24,5 +24,6 @@ class HomeModule extends \yii\base\Module
         if (\Yii::$app instanceof \yii\console\Application){
             $this->controllerNamespace = 'app\modules\home\commands';
         }
+        \Yii::configure($this,require __DIR__ . '/config.php');
     }
 }

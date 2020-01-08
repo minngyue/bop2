@@ -17,7 +17,9 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0"
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "itbdw/ip-database": "^2.0",
+        "jenssegers/agent": "^2.6"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -44,7 +46,7 @@
             "yii\\composer\\Installer::postInstall"
         ]
     },
-    "replace":{             //为了防止通过Composer安装assets，大于正常的js插件版本
+    "replace":{
         "bower-asset/jquery": ">=1.11.0",
         "bower-asset/inputmask": ">=3.2.0",
         "bower-asset/punycode": ">=1.3.0",

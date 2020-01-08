@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\modules\home\HomeModule;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -61,6 +62,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+//        $module = HomeModule::getInstance();
+//        $moduleId = $module->id;
+
+        //获取ID为 “home” 的模块
+        $module = Yii::$app->getModule('home');
+        $maxPostCount = $module->params['maxPostCount'];
+
+        //获取处理当前请求控制器所属的模块
+//        $module = Yii::$app->controller->module;
+
         return $this->render('index');
     }
 

@@ -8,7 +8,7 @@
 
 namespace app\controllers;
 
-use app\components\UBaseController;
+use app\components\controllers\UBaseController;
 use app\models\test\EntryForm;
 use app\models\User;
 use app\models\UserModel;

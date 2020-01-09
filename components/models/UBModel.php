@@ -5,13 +5,13 @@
  * Date: 2020/1/8
  * Time: 12:21
  */
-namespace app\models;
+namespace app\components\models;
 
-use app\controllers\home\AccountController;
 use Yii;
+use yii\base\Model;
 use yii\db\ActiveRecord;
 
-class BaseModel extends ActiveRecord
+class UBModel extends ActiveRecord
 {
     public $models;
     public $pages;
@@ -34,6 +34,7 @@ class BaseModel extends ActiveRecord
     /**
      * 实例化模型
      * @param null $condition
+     * @return Model|null
      * Author Minnyue
      * Created At 2020/1/8 14:00
      */
@@ -43,7 +44,7 @@ class BaseModel extends ActiveRecord
             return new static();
         }
 
-        if ($model = static::findOne($condition) !== null) {
+        if (($model = static::findOne($condition)) !== null) {
             return $model;
         }
     }

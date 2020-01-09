@@ -68,4 +68,17 @@ final class Utils
 
         return $browser . '(' . $version . ')';
     }
+
+    /**
+     * Encodes special characters into HTML entities.
+     * The [[\yii\base\Application::charset|application charset]] will be used for encoding.
+     * @param string $content the content to be encoded
+     * @param bool $doubleEncode whether to encode HTML entities in `$content`. If false,
+     * HTML entities in `$content` will not be further encoded.
+     * @return string the encoded content
+     */
+    static function encode($content, $doubleEncode = true)
+    {
+        return htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, Yii::$app ? Yii::$app->charset : 'UTF-8', $doubleEncode);
+    }
 }

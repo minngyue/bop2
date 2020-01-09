@@ -7,6 +7,7 @@
  */
 namespace app\components\controllers;
 use app\components\utils\Utils;
+use app\models\Apply;
 use app\models\Config;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -21,10 +22,10 @@ class UBaseController extends Controller
     public function beforeAction($action)
     {
         if(!$this->isInstalled()){
-            return $this->redirect('home/install/step1')->send();
+            return $this->redirect(['/home/install/step1'])->send();
         }
 
-        $config = Config::findOne(['type'=>'safe']);
+        $config = Config::findModel(['type'=>'safe']);
 
         $ipWhiteList = array_filter(explode('\r\n',trim($config->ip_white_list)));
         $ipBlackList = array_filter(explode('\r\n',trim($config->ip_black_list)));
@@ -32,7 +33,7 @@ class UBaseController extends Controller
         $ip = Utils::getUserIp();
 
         if ($ipWhiteList && !in_array($ip,$ipWhiteList)){
-//            return $this->error();
+            return $this->error();
         }
     }
 
@@ -46,8 +47,13 @@ class UBaseController extends Controller
     public function display($view, $params = [])
     {
         if (!\Yii::$app->user->isGuest){
-//            $notify = Apply
+            $notify = Apply::findModel(['check_status'=>Apply::CHECK_STATUS, 'order_by'=>'id desc']);
+            $account = \Yii::$app->user->identity;
+
+            $params['notify'] = $notify;
+            $params['account'] = $account;
         }
+        exit($this->render($view ,$params));
     }
     /**
      * 错误提示信息
@@ -61,8 +67,9 @@ class UBaseController extends Controller
     {
         $jumpUrl = $jumpUrl ? Url::toRoute($jumpUrl) : \Yii::$app->request->referrer;
 
-//        return $this->display
+        return $this->display('/home/');
     }
+
     /**
      * 判断是否已经安装过
      * @return bool

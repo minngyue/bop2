@@ -11,5 +11,8 @@ use yii\web\Controller;
 
 class AccountController extends Controller
 {
-
+    public function action11()
+    {
+        echo 1111;
+    }
 }

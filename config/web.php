@@ -39,6 +39,22 @@ $config = [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
+        'view' => [
+            'defaultExtension' => 'php',
+            'renderers' => [
+                'php' => [
+                    'class' => 'yii\smarty\ViewRenderer',
+                    'cachePath' => '@runtime/smarty/cache',
+                    'compilePath' => '@runtime/smarty/compile',
+                    'options' => [
+                        'left_delimiter' => '{{',
+                        'right_delimiter' => '}}',
+                    ],
+                    'pluginDirs' => ['@app/plugins/smarty'],
+                ],
+            ],
+
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

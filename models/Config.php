@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\models\UBModel;
 use Yii;
 
 /**
@@ -13,7 +14,7 @@ use Yii;
  * @property string $created_at 创建时间
  * @property string $updated_at 更新时间
  */
-class Config extends BaseModel
+class Config extends UBModel
 {
     /**
      * {@inheritdoc}

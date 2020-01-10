@@ -6,6 +6,8 @@
  * Time: 16:57
  */
 namespace app\components\controllers;
+
+use Yii;
 use app\components\utils\Utils;
 use app\models\Apply;
 use app\models\Config;
@@ -33,7 +35,7 @@ class UBaseController extends Controller
         $ip = Utils::getUserIp();
 
         if ($ipWhiteList && !in_array($ip,$ipWhiteList)){
-            return $this->error();
+//            return $this->error();
         }
     }
 
@@ -46,9 +48,9 @@ class UBaseController extends Controller
      */
     public function display($view, $params = [])
     {
-        if (!\Yii::$app->user->isGuest){
+        if (!Yii::$app->user->isGuest){
             $notify = Apply::findModel(['check_status'=>Apply::CHECK_STATUS, 'order_by'=>'id desc']);
-            $account = \Yii::$app->user->identity;
+            $account = Yii::$app->user->identity;
 
             $params['notify'] = $notify;
             $params['account'] = $account;
@@ -65,7 +67,7 @@ class UBaseController extends Controller
      */
     public function error($message, $jumpSeconds = 3, $jumpUrl = '')
     {
-        $jumpUrl = $jumpUrl ? Url::toRoute($jumpUrl) : \Yii::$app->request->referrer;
+        $jumpUrl = $jumpUrl ? Url::toRoute($jumpUrl) : Yii::$app->request->referrer;
 
         return $this->display('/home/');
     }
@@ -78,6 +80,6 @@ class UBaseController extends Controller
      */
     public function isInstalled()
     {
-        return file_exists(\Yii::getAlias('@runtime') . '/install/install.lock');
+        return file_exists(Yii::getAlias('@runtime') . '/install/install.lock');
     }
 }

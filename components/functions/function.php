@@ -4,8 +4,6 @@ if (!function_exists('url')){
      * @param string $route
      * @param array $params
      * @param bool $scheme
-     * Author Minnyue
-     * Created At 2020/1/8 18:34
      */
     function url($route = '',$params = [],$scheme = false)
     {
@@ -14,5 +12,15 @@ if (!function_exists('url')){
         }
         $params[] = $route;
         return yii\helpers\Url::toRoute($params,$scheme);
+    }
+}
+
+/**
+ * 生成CSRF口令
+ */
+if (!function_exists('csrf_token')){
+    function csrf_token()
+    {
+        return Yii::$app->request->csrfToken;
     }
 }

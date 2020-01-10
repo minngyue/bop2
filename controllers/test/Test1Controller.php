@@ -6,6 +6,8 @@
  * Time: 14:27
  */
 namespace app\controllers\test;
+
+use Yii;
 use yii\web\Controller;
 use app\models\test\EntryForm;
 use yii\helpers\Inflector;
@@ -34,4 +36,14 @@ class Test1Controller extends Controller
     {
         var_dump(Inflector::camel2id(StringHelper::basename(get_called_class()), '_'));
     }
+
+    function actionRedis()
+    {
+        $redis = Yii::$app->redis;
+        $redis->set('username','777777');
+        var_dump($redis->get('username'));exit;
+
+    }
+
+
 }

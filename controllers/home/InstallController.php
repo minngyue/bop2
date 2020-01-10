@@ -15,6 +15,8 @@ use yii\web\Response;
 class InstallController extends UBaseController
 {
     public $layout = '/install/main';
+//    public $layout = false;
+
     public function beforeAction($action)
     {
         if ($this->isInstalled()) {

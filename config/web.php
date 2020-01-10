@@ -1,4 +1,5 @@
 <?php
+
 use yii\db\Connection;
 
 $params = require __DIR__ . '/params.php';
@@ -33,28 +34,34 @@ $config = [
             'cookieValidationKey' => 'hAfcR80HWgcOLWnG-xy95pD82XB-3F6p',
         ],
         'cache' => [                        //文件缓存
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\FileCache',       //缓存接口1，且缓存存储在runtime/cache目录下
+//            'class'=>'yii\redis\Cache',                 //缓存接口2，且缓存存储在redis数据库中，性能将大大提高
+        ],
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => '127.0.0.1',
+            'port' => 6379,
+            'database' => 0
         ],
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
-        'view' => [
-            'defaultExtension' => 'php',
-            'renderers' => [
-                'php' => [
-                    'class' => 'yii\smarty\ViewRenderer',
-                    'cachePath' => '@runtime/smarty/cache',
-                    'compilePath' => '@runtime/smarty/compile',
-                    'options' => [
-                        'left_delimiter' => '{{',
-                        'right_delimiter' => '}}',
-                    ],
-                    'pluginDirs' => ['@app/plugins/smarty'],
-                ],
-            ],
-
-        ],
+//        'view' => [
+//            'defaultExtension' => 'php',
+//            'renderers' => [
+//                'php' => [
+//                    'class' => 'yii\smarty\ViewRenderer',
+//                    'cachePath' => '@runtime/smarty/cache',
+//                    'compilePath' => '@runtime/smarty/compile',
+//                    'options' => [
+//                        'left_delimiter' => '{{',
+//                        'right_delimiter' => '}}',
+//                    ],
+//                    'pluginDirs' => ['@app/plugins/smarty'],
+//                ],
+//            ],
+//        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -71,17 +78,17 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error','warning','info'],
-                    'categories'=>[
-                        'application'.$logFile,
-                        'pay'.$logFile,
-                        'console'.$logFile
+                    'levels' => ['error', 'warning', 'info'],
+                    'categories' => [
+                        'application' . $logFile,
+                        'pay' . $logFile,
+                        'console' . $logFile
                     ],
 //                    'exportInterval'=>1,
                 ],
                 [
-                    'class'=>'yii\log\DbTarget',        //在数据库表里保存他们
-                    'levels'=>['error','warning']
+                    'class' => 'yii\log\DbTarget',        //在数据库表里保存他们
+                    'levels' => ['error', 'warning']
                 ]
                 //邮件日志
 //                [
@@ -123,13 +130,13 @@ $config = [
         'booking' => 'app\modules\booking\BookingModule',     //在gii中设置模块类及模块ID自动生成模块
         'comment' => [
             'class' => 'app\modules\comment\CommentModule',
-            'db' =>  [
+            'db' => [
                 'tablePrefix' => 'main_',
                 'class' => Connection::className(),
                 'enableQueryCache' => false
             ],
         ],
-        'homing'=>'app\modules\homing\HomingModule',
+        'homing' => 'app\modules\homing\HomingModule',
     ],
     'params' => $params,            //使用方法：Yii::$app->params[''];
 ];

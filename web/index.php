@@ -7,6 +7,7 @@ define('YII_ENABLE_ERROR_HANDLER',true);           //标识是否启用Yii提供
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
+require __DIR__. '/../components/functions/function.php';
 
 $config = require __DIR__ . '/../config/web.php';
 

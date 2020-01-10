@@ -1,9 +1,12 @@
 <?php
-use app\components\BaseLayoutManager;
 /* @var $this \yii\web\View */
+
 /* @var $content string */
-Yii::setAlias('@static','/static');
-$static_url = Yii::getAlias('@static');
+
+use yii\helpers\Html;
+use app\assets\AdminAsset;
+
+AdminAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -18,17 +21,18 @@ $static_url = Yii::getAlias('@static');
         <meta name="version" content="{{APP_VERSION}}">
         <meta name="author" content="minngyue">
         <title><?= \app\components\utils\Utils::encode($this->title) ?></title>
-<!--        --><?php //BaseLayoutManager::writeCss('default')?>
-        <link href="{{STATIC_URL}}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <?=\yii\helpers\Html::cssFile('@static/css/plugins/bootstrap/css/bootstrap.min.css')?>
-        <!-- jQuery -->
-<!--        --><?php //BaseLayoutManager::writeJs('default')?>
+        <?php $this->head() ?>
     </head>
     <?php $this->beginBody() ?>
     <body>
     <div class="container">
         <?= $content ?>
     </div>
+    <?php AdminAsset::addJs($this, [
+        '@app/static/plugins/bootstrap/js/bootstrap.min.js',
+//        'plugins/layer/layer.min.js',
+//        'plugins/metismenu/js/metisMenu.min.js'
+    ]) ?>
     </body>
     <?php $this->endBody() ?>
     </html>

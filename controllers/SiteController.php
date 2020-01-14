@@ -66,7 +66,7 @@ class SiteController extends Controller
 //        $moduleId = $module->id;
 
         //获取ID为 “home” 的模块
-        $module = Yii::$app->getModule('home');
+        $module = Yii::$app->getModule('homing');
         $maxPostCount = $module->params['maxPostCount'];
 
         //获取处理当前请求控制器所属的模块

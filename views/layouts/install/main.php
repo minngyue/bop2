@@ -28,11 +28,9 @@ AdminAsset::register($this);
     <div class="container">
         <?= $content ?>
     </div>
-    <?php AdminAsset::addJs($this, [
-        '@app/static/plugins/bootstrap/js/bootstrap.min.js',
-//        'plugins/layer/layer.min.js',
-//        'plugins/metismenu/js/metisMenu.min.js'
-    ]) ?>
+    <?php AdminAsset::addJs($this,'@app/static/plugins/bootstrap/js/bootstrap.min.js') ?>
+<!--    --><?php //AdminAsset::addJs($this,'@app/static/plugins/layer/layer.min.js') ?>
+<!--    --><?php //AdminAsset::addJs($this,'@app/static/plugins/metismenu/js/metisMenu.min.js') ?>
     </body>
     <?php $this->endBody() ?>
     </html>

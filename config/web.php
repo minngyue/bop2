@@ -14,7 +14,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
-    'defaultRoute' => 'apps',                        //该属性指定未配置的请求的响应 路由 规则,当请求'/'时，默认跳转apps控制器
+//    'defaultRoute' => '/home/install',           //该属性指定未配置的请求的响应 路由 规则,当请求'/'时，默认跳转apps控制器
 //    'version' => '1.0',                         //该属性指定应用的版本，其他代码不使用的话可以不配置
 //    'language' => 'zh_cn',                      //该属性指定应用展示给终端用户的语言。
 //    'sourceLanguage' => 'en-US',                //该属性指定应用代码的语言
@@ -110,7 +110,8 @@ $config = [
             'enableStrictParsing' => false,      //是否启用严格解析，且仅当enablePrettyUrl 为true时，才使用属性，严格解析，传入*请求的URL至少与rules之一匹配，才能视为有效请求
             'showScriptName' => false,        //是否在构造的URL中显示条目脚本名称，默认为true，仅当enablePrettyUrl为true时使用
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+//                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+                '/'=>'/home/site/index'
             ],
         ]
     ],

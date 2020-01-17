@@ -24,3 +24,18 @@ if (!function_exists('csrf_token')){
         return Yii::$app->request->csrfToken;
     }
 }
+
+/**
+ * 获取系统配置信息
+ */
+if (!function_exists('config')){
+    function config($name,$type = 'app'){
+        $name = trim($name);
+        if (strpos($name,'.') !== false){
+            list($type,$field) = explode('.',$name);
+        }else{
+            $field = $name;
+        }
+        return \app\models\Config::findModel(['type'=>$type])->$field;
+    }
+}

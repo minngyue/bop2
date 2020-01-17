@@ -11,6 +11,7 @@ namespace app\controllers\home;
 use app\components\controllers\UBaseController;
 use app\components\utils\Utils;
 use app\models\Account;
+use app\models\logs\CreateLog;
 use app\models\Member;
 use Yii;
 use yii\web\Response;
@@ -144,7 +145,7 @@ class InstallController extends UBaseController
                     'created_at' => date('Y-m-d H:i:s'),
                     'password' => $account->setPassword($step3['password'], 10),
                     'auth_key' => $account->generateAuthKey(),
-                ], false);
+                ]);
 
                 if (!$account->save()) {
                     $transaction->rollBack();
@@ -167,16 +168,37 @@ class InstallController extends UBaseController
                     'created_at' => date("Y-m-d H:i:s")
                 ]);
 
-                if (!$member->save()){
+                if (!$member->save()) {
                     $transaction->rollBack();
-                    return ['status'=>'error','message'=>$member->getErrorMessage(),'label'=>$member->getErrorLabel()];
+                    return ['status' => 'error', 'message' => $member->getErrorMessage(), 'label' => $member->getErrorLabel()];
                 }
 
                 //保存日志
+                $createLog = new CreateLog();
+                $createLog->setAttributes([
+                    'user_id' => $account->id,
+                    'user_name' => $account->name,
+                    'user_email' => $account->email,
+                ]);
 
+                if (!$createLog->save()) {
+                    $transaction->rollBack();
+                    return ['status' => 'error', 'message' => $createLog->getErrorMessage(), 'label' => $createLog->getErrorLabel()];
+                }
 
+                $transaction->commit();
+                $login_keep_time = config('login_keep_time', 'safe');
+                Yii::$app->user->login($account, 60 * 60 * $login_keep_time);
+
+                Yii::$app->cache->set('step', 3);
+
+                return ['status' => 'success', 'callback' => url('home/install/step4')];
             } catch (\Exception $e) {
-
+                $transaction->rollBack();
+                return ['status' => 'error', 'message' => '数据库初始化安装失败,' . $e->getMessage()];
+            } catch (\Throwable $e) {
+                $transaction->rollBack();
+                return ['status' => 'error', 'message' => '数据库初始化安装失败,' . $e->getMessage()];
             }
         }
         return $this->display('/install/step3');

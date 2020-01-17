@@ -145,8 +145,9 @@ class InstallController extends UBaseController
                     'created_at' => date('Y-m-d H:i:s'),
                     'password' => $account->setPassword($step3['password'], 10),
                     'auth_key' => $account->generateAuthKey(),
-                ]);
-
+                ],false);
+                file_put_contents("E:/workspace/tmp/3.txt",print_r($account,1));
+                file_put_contents("E:/workspace/tmp/3.txt",print_r($account->generateAuthKey(),1),8);
                 if (!$account->save()) {
                     $transaction->rollBack();
                     return ['status' => 'error', 'message' => $account->getErrorMessage(), 'label' => $account->getErrorLabel()];
@@ -225,12 +226,10 @@ class InstallController extends UBaseController
     private function getInitSql()
     {
         $lines = file(Yii::getAlias('@runtime') . '/install/db.sql');
-        file_put_contents("E:/workspace/tmp/3.txt", print_r($lines, 1), 8);
         $sql = "";
         foreach ($lines as $line) {
             $line = trim($line);
             if ($line != '') {
-                file_put_contents("E:/workspace/tmp/1.txt", print_r($line, 1), 8);
                 if (!($line{0} == "#" || $line{0} . $line{1} == "--")) {
                     $line = str_replace("doc_", Yii::$app->db->tablePrefix, $line);
                     $sql .= $line;

@@ -8,7 +8,21 @@
 namespace app\models;
 
 use Yii;
-class Account extends BaseModel
-{
+use app\models\User;
 
+class Account extends User
+{
+    const USER_TYPE = 10;       //普通用户类型
+    const ADMIN_TYPE = 20;      //管理员类型
+
+    /**
+     * @param $email
+     * @return null|static
+     * Author Minnyue
+     * Created At 2020/1/17 14:35
+     */
+    public static function findByEmail($email)
+    {
+        return self::findOne(['email'=>$email]);
+    }
 }

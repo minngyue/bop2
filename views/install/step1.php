@@ -10,7 +10,7 @@ $this->title = Yii::t('app','环境检测——安装步骤');
             </div>
             <div class="panel-body">
                 <?= $this->render('/layouts/install/nav',['step'=>1]); ?>
-                <form id="js_stepForm" role="form" action="<?php echo url('install/step1')?>" method="post">
+                <form id="js_stepForm" role="form" action="<?php echo url('home/install/step1')?>" method="post">
                     <input type="hidden" name="csrf-phprap" value="<?php echo csrf_token()?>">
                     <div class="row">
                         <div class="col-lg-12">
@@ -265,7 +265,7 @@ $this->title = Yii::t('app','环境检测——安装步骤');
             'success':function (json) {
                 window.location.href = json.callback;
             }
-        })
+        });
     })
 
 </script>

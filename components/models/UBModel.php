@@ -7,6 +7,7 @@
  */
 namespace app\components\models;
 
+use app\models\Account;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
@@ -101,6 +102,11 @@ class UBModel extends ActiveRecord
         return $this->hasOne(Account::className(),['id'=>'updater_id']);
     }
 
+    public function getUserIp()
+    {
+        return Yii::$app->request->userIP;
+    }
+
     /**
      * 获取当前格式化时间
      * @param string $format
@@ -139,6 +145,16 @@ class UBModel extends ActiveRecord
         }
     }
 
+    /**
+     * 获取错误信息
+     * @return mixed
+     * Author Minnyue
+     * Created At 2020/1/17 15:06
+     */
+    public function getErrorMessage()
+    {
+        return current($this->getFirstErrors());
+    }
 
 
 }

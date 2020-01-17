@@ -4,9 +4,9 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use app\assets\AdminAsset;
+use app\assets\AppAsset;
 
-AdminAsset::register($this);
+AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -28,9 +28,18 @@ AdminAsset::register($this);
     <div class="container">
         <?= $content ?>
     </div>
-    <?php AdminAsset::addJs($this,'@app/static/plugins/bootstrap/js/bootstrap.min.js') ?>
-<!--    --><?php //AdminAsset::addJs($this,'@app/static/plugins/layer/layer.min.js') ?>
-<!--    --><?php //AdminAsset::addJs($this,'@app/static/plugins/metismenu/js/metisMenu.min.js') ?>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <?php
+    $this->registerJsFile('/plugins/bootstrap/js/bootstrap.min.js',['depends'=>[AppAsset::className()]]);
+    $this->registerJsFile('/plugins/layer/layer.min.js',['depends'=>[AppAsset::className()]]);
+    $this->registerJsFile('/plugins/metismenu/js/metisMenu.min.js',['depends'=>[AppAsset::className()]]);
+    $this->registerJsFile('/plugins/artdialog/js/dialog.min.js',['depends'=>[AppAsset::className()]]);
+    $this->registerJsFile('/plugins/validform/datatype.min.js',['depends'=>[AppAsset::className()]]);
+    $this->registerJsFile('/js/app.min.js',['depends'=>[AppAsset::className()]]);
+    ?>
     </body>
     <?php $this->endBody() ?>
     </html>

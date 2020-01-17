@@ -29,6 +29,9 @@ $config = [
     'viewPath' => '@app/views',
 
     'components' => [
+        'assetManager' => [         //
+            'appendTimestamp' => true,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'hAfcR80HWgcOLWnG-xy95pD82XB-3F6p',
@@ -111,7 +114,7 @@ $config = [
             'showScriptName' => false,        //是否在构造的URL中显示条目脚本名称，默认为true，仅当enablePrettyUrl为true时使用
             'rules' => [
 //                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
-                '/'=>'/home/site/index'
+                '/' => '/home/site/index'
             ],
         ]
     ],

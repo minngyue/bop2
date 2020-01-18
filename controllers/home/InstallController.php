@@ -142,17 +142,16 @@ class InstallController extends UBaseController
                     'email' => $step3['email'],
                     'ip' => $account->getUserIp(),
                     'location' => Utils::getLocation(),
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'password' => $account->setPassword($step3['password'], 10),
-                    'auth_key' => $account->generateAuthKey(),
+                    'created_at' => date('Y-m-d H:i:s')
                 ],false);
-                file_put_contents("E:/workspace/tmp/3.txt",print_r($account,1));
-                file_put_contents("E:/workspace/tmp/3.txt",print_r($account->generateAuthKey(),1),8);
+                $account->setPassword($step3['password'], 10);
+                $account->generateAuthKey();
+
                 if (!$account->save()) {
                     $transaction->rollBack();
                     return ['status' => 'error', 'message' => $account->getErrorMessage(), 'label' => $account->getErrorLabel()];
                 }
-
+                Yii::info(3332333,'application.Exception.install.step3');
                 $member = new Member();
                 $member->setAttributes([
                     'encode_id' => $member->createEncodeId(),
@@ -167,8 +166,7 @@ class InstallController extends UBaseController
                     'template_rule' => 'look,create,update',
                     'creater_id' => 1,
                     'created_at' => date("Y-m-d H:i:s")
-                ]);
-
+                ],false);
                 if (!$member->save()) {
                     $transaction->rollBack();
                     return ['status' => 'error', 'message' => $member->getErrorMessage(), 'label' => $member->getErrorLabel()];
@@ -180,9 +178,8 @@ class InstallController extends UBaseController
                     'user_id' => $account->id,
                     'user_name' => $account->name,
                     'user_email' => $account->email,
-                ]);
-
-                if (!$createLog->save()) {
+                ],false);
+                if (!$createLog->store()) {
                     $transaction->rollBack();
                     return ['status' => 'error', 'message' => $createLog->getErrorMessage(), 'label' => $createLog->getErrorLabel()];
                 }
@@ -196,13 +193,32 @@ class InstallController extends UBaseController
                 return ['status' => 'success', 'callback' => url('home/install/step4')];
             } catch (\Exception $e) {
                 $transaction->rollBack();
+                Yii::info($e->getMessage(),'application.Exception.install.step3');
                 return ['status' => 'error', 'message' => '数据库初始化安装失败,' . $e->getMessage()];
             } catch (\Throwable $e) {
                 $transaction->rollBack();
+                Yii::info($e->getMessage(),'application.Throwable.install.step3');
                 return ['status' => 'error', 'message' => '数据库初始化安装失败,' . $e->getMessage()];
             }
         }
         return $this->display('/install/step3');
+    }
+
+    public function actionStep4()
+    {
+        if (Yii::$app->cache->get('step') != 3){
+            return $this->redirect(['home/install/step3']);
+        }
+
+        if (file_put_contents(Yii::getAlias('@runtime') . '/install/install.lock',json_encode(['installed_at'=>date('Y-m-d H:i:s')])) === false ){
+            return ['status'=>'error','message'=>'数据库锁文件写入错误，请检查 runtime/install 文件夹是否有可写权限'];
+        }
+
+        Yii::$app->cache->set('step',4);
+        $sql_str = "show tables";
+        $tables = Yii::$app->db->createCommand($sql_str)->queryColumn();
+
+        return $this->display('/install/step4',compact('tables'));
     }
 
     /**

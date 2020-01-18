@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\NotSupportedException;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -19,7 +21,7 @@ use Yii;
  * @property string|null $created_at 创建时间
  * @property string|null $updated_at 更新时间
  */
-class User extends \app\components\models\UBModel
+class User extends \app\components\models\UBModel implements IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -65,6 +67,33 @@ class User extends \app\components\models\UBModel
         ];
     }
 
+    public static function findIdentity($id)
+    {
+        if (file_exists(Yii::getAlias("@runtime") . '/install/install.lock')){
+            return static::findOne(['id'=>$id,'status'=>self::ACTION_STATUS]);
+        }
+        return null;
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        throw new NotSupportedException('"findIdentityByAccessToken" is not  implemented.');
+    }
+
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
+
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->auth_key === $authKey;
+    }
     /**
      * @param string $password
      * @param string $cost

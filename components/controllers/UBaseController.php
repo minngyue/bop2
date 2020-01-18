@@ -37,6 +37,7 @@ class UBaseController extends Controller
         if ($ipWhiteList && !in_array($ip,$ipWhiteList)){
 //            return $this->error();
         }
+        return true;
     }
 
     /**

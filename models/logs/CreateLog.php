@@ -2,6 +2,7 @@
 
 namespace app\models\logs;
 
+use app\components\utils\Utils;
 use Yii;
 
 /**
@@ -60,5 +61,32 @@ class CreateLog extends \app\components\models\UBModel
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * 处理保存信息
+     * @return bool
+     * Author Minnyue
+     * Created At 2020/1/18 11:06
+     */
+    public function store()
+    {
+        $log = $this;
+
+        $log->user_id = $this->user_id;
+        $log->user_name  = $this->user_name;
+        $log->user_email = $this->user_email;
+        $log->ip         = $this->getUserIp();
+        $log->location   = Utils::getLocation();
+        $log->browser    = Utils::getBrowser();
+        $log->os         = Utils::getOs();
+        $log->created_at = date('Y-m-d H:i:s');
+
+        if (!$log->save()){
+            $this->addError($this->getErrorLabel(),$this->getErrorMessage());
+            return false;
+
+        }
+        return true;
     }
 }

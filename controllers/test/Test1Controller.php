@@ -15,6 +15,15 @@ use yii\helpers\StringHelper;
 
 class Test1Controller extends Controller
 {
+    /**
+     * 测试php函数
+     * Author Minnyue
+     * Created At 2020/1/18 11:23
+     */
+    function actionFunction()
+    {
+        var_dump(random_bytes(32));
+    }
     public function actionIndex()
     {
         return $this->render('index');

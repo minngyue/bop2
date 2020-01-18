@@ -82,12 +82,16 @@ $config = [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'info'],
-                    'categories' => [
-                        'application' . $logFile,
-                        'pay' . $logFile,
-                        'console' . $logFile
-                    ],
+                    'categories' =>  'application.*',
+                    'logFile'=>'logs/application.'.$logFile
 //                    'exportInterval'=>1,
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning', 'info'],
+                    'categories' => 'console.*',
+                    'logFile'=>'logs/console'.$logFile
+//
                 ],
                 [
                     'class' => 'yii\log\DbTarget',        //在数据库表里保存他们
@@ -114,7 +118,8 @@ $config = [
             'showScriptName' => false,        //是否在构造的URL中显示条目脚本名称，默认为true，仅当enablePrettyUrl为true时使用
             'rules' => [
 //                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
-                '/' => '/home/site/index'
+                '/' => '/home/site/index',
+                '/admin/home' => '/admin/home/index',
             ],
         ]
     ],

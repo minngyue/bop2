@@ -8,6 +8,7 @@
 namespace app\components\models;
 
 use app\models\Account;
+use itbdw\Ip\IpLocation;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
@@ -107,6 +108,22 @@ class UBModel extends ActiveRecord
         return Yii::$app->request->userIP;
     }
 
+    /**
+     * 获取ip地理位置
+     * @param null $ip
+     * @return string
+     */
+    public function getLocation($ip = null)
+    {
+        $ip = $ip ? : $this->getUserIp();
+
+        $location  = IpLocation::getLocation($ip);
+
+        $country = $location['country'];
+        $province = $location['province'];
+        $city = $location['city'] ? : $province;
+        return $country . ' ' . $province . ' ' .$city;
+    }
     /**
      * 获取当前格式化时间
      * @param string $format

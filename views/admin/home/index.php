@@ -1,7 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: MinngYue
- * Date: 2020/1/18
- * Time: 18:01
- */
+$this->title = "管理中心--Bop接口文档中心";
+
+?>
+
+

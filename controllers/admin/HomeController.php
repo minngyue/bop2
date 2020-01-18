@@ -18,4 +18,9 @@ class HomeController extends UBaseController
     {
         return $this->display('index');
     }
+
+    public function display($view, $params = [])
+    {
+        exit($this->render($view));
+    }
 }

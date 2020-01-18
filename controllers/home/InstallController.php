@@ -254,4 +254,9 @@ class InstallController extends UBaseController
         }
         return $sql;
     }
+
+    public function display($view, $params = [])
+    {
+        exit($this->render($view,$params));
+    }
 }

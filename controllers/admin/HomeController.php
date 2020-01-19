@@ -16,6 +16,7 @@ class HomeController extends UBaseController
 
     public function actionIndex()
     {
+        var_dump(Yii::$app->getRequest()->params);exit;
         return $this->display('index');
     }
 

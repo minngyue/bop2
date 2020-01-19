@@ -14,6 +14,6 @@ class SiteController extends UBaseController
 {
     public function actionIndex()
     {
-        echo 333;exit;
+        return $this->redirect(['project/select']);
     }
 }

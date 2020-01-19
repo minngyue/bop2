@@ -120,6 +120,8 @@ $config = [
 //                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
                 '/' => '/home/site/index',
                 '/admin/home' => '/admin/home/index',
+                '/project/<id:d+>'=>'home/project/show',
+                "<controller:\w+>/<action:\w+>"=>"home/<controller>/<action>",
             ],
         ]
     ],

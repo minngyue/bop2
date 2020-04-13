@@ -4,6 +4,7 @@ use yii\db\Connection;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$db2 = require __DIR__ . '/db2.php';
 $logFile = date('Ymd') . '.log';
 $config = [
     'id' => 'basic',                        //用来区分其他应用的唯一标识ID
@@ -35,6 +36,9 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'hAfcR80HWgcOLWnG-xy95pD82XB-3F6p',
+            'parsers' => [          //w: 为了使API 接收 JSON 格式的输入数据，
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [                        //文件缓存
             'class' => 'yii\caching\FileCache',       //缓存接口1，且缓存存储在runtime/cache目录下
@@ -76,21 +80,21 @@ $config = [
             'useFileTransport' => true,
         ],
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,          //消息跟踪级别，Yii_DEBUG开启，每个日志消息被记录的时候，将被追加最多3个调用堆栈层级，
-//            'flushInterval'=>1,         //为了让每个日志消息在日志目标中能够立即出现，应设置flushInterval和exportInterval都为1,注意频繁的消息刷新和导出将降低你的应用性能
+            'traceLevel' => YII_DEBUG ? 3 : 0,          //w: 消息跟踪级别，Yii_DEBUG开启，每个日志消息被记录的时候，将被追加最多3个调用堆栈层级，
+//            'flushInterval'=>1,         //w : 为了让每个日志消息在日志目标中能够立即出现，应设置flushInterval和exportInterval都为1,注意频繁的消息刷新和导出将降低你的应用性能
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'info'],
-                    'categories' =>  'application.*',
-                    'logFile'=>'logs/application.'.$logFile
+                    'categories' => 'application.*',
+                    'logFile' => 'logs/application.' . $logFile
 //                    'exportInterval'=>1,
                 ],
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'info'],
                     'categories' => 'console.*',
-                    'logFile'=>'logs/console'.$logFile
+                    'logFile' => 'logs/console' . $logFile
 //
                 ],
                 [
@@ -111,18 +115,21 @@ $config = [
             ],
         ],
         'db' => $db,
+        'db2'=>$db2,
         //配置URL规则
         'urlManager' => [
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false,      //是否启用严格解析，且仅当enablePrettyUrl 为true时，才使用属性，严格解析，传入*请求的URL至少与rules之一匹配，才能视为有效请求
             'showScriptName' => false,        //是否在构造的URL中显示条目脚本名称，默认为true，仅当enablePrettyUrl为true时使用
             'rules' => [
-//                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'users'],
                 '/' => '/home/site/index',
                 '/admin/home' => '/admin/home/index',
-                '/project/<id:d+>'=>'home/project/show',
-                "<controller:\w+>/<action:\w+>"=>"home/<controller>/<action>",
+                '/project/<id:d+>' => 'home/project/show',
+                "<controller:\w+>/<action:\w+>" => "home/<controller>/<action>",
+
             ],
+
         ]
     ],
 
@@ -148,6 +155,15 @@ $config = [
             ],
         ],
         'homing' => 'app\modules\homing\HomingModule',
+        'vuecms' => [
+            'class' => 'app\modules\vuecms\VuecmsModule',
+            'components' => [
+                'db' => [
+                    'tablePrefix' => 'module_',
+                    'class' => Connection::className()
+                ],
+            ]
+        ]
     ],
     'params' => $params,            //使用方法：Yii::$app->params[''];
 ];

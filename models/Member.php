@@ -14,7 +14,7 @@ use Yii;
  * @property int $join_type 加入方式
  * @property string $project_rule 项目权限
  * @property string $env_rule 环境权限
- * @property string $template_rule 模板权限
+ * @property string $template_rule 模板权限·
  * @property string $module_rule 模块权限
  * @property string $api_rule 接口权限
  * @property string $member_rule 成员权限
@@ -28,7 +28,7 @@ class Member extends \app\components\models\UBModel
     const INITIATIVE_JOIN_TYPE = 10; // 主动加入
     const PASSIVE_JOIN_TYPE    = 20; // 邀请加入
 
-    public $find = ['look','create','update','transfer','export','delete','remove','template'];
+    public $find = ['look','create','update','transfer','xport','delete','remove','template'];
 
     public $replace = ['查看、','添加、','编辑、','转让、','导出、','删除、','移除、','模板、'];
 

@@ -9,6 +9,8 @@
 namespace app\controllers\admin;
 
 use app\components\controllers\UBaseController;
+use app\models\Profile;
+use app\models\User;
 use app\models\UserModel;
 use yii\filters\AccessControl;
 
@@ -48,8 +50,8 @@ class AdminController extends UBaseController
 
     public function actionIndex()
     {
-        $admin = UserModel::find();
-//        var_dump($admin);
+        $user =  User::findOne(1);
+        var_dump(Profile::findOne(1));
     }
 
     public function actionView()

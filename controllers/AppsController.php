@@ -35,6 +35,7 @@ class AppsController extends Controller
      */
     public function actionIndex()
     {
+        echo 'appcontroller';exit;
         $searchModel = new AppsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         Yii::info('start calculating average',__METHOD__);

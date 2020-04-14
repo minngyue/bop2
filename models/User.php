@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\web\IdentityInterface;
+use app\components\models\UBModel;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -21,7 +22,7 @@ use yii\web\IdentityInterface;
  * @property string|null $created_at 创建时间
  * @property string|null $updated_at 更新时间
  */
-class User extends \app\components\models\UBModel implements IdentityInterface
+class User extends UBModel implements IdentityInterface
 {
     /**
  * {@inheritdoc}
